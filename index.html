@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍳 PantryChef AI - Smart Recipe Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .pantry-list {
+            list-style: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .pantry-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .pantry-item:hover {
+            transform: translateX(5px);
+            background: #e9ecef;
+        }
+
+        .pantry-item.expiring-soon {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+        }
+
+        .pantry-item.expired {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .item-expiry {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+            width: auto;
+            margin: 0;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+            transform: none;
+        }
+
+        .recipe-section {
+            grid-column: 1 / -1;
+        }
+
+        .recipe-output {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            min-height: 200px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .loading {
+            text-align: center;
+            color: #667eea;
+            font-style: italic;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            padding: 40px;
+            font-size: 1.1em;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            font-size: 1.2em;
+            padding: 15px 40px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍳 PantryChef AI</h1>
+            <p>Turn your ingredients into delicious recipes</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalItems">0</div>
+                <div class="stat-label">Total Items</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="expiringItems">0</div>
+                <div class="stat-label">Expiring Soon</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="card">
+                <h2>➕ Add Ingredient</h2>
+                <form id="addItemForm">
+                    <div class="form-group">
+                        <label for="itemName">Ingredient Name</label>
+                        <input type="text" id="itemName" placeholder="e.g., Chicken Breast" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expiryDate">Expiry Date</label>
+                        <input type="date" id="expiryDate">
+                    </div>
+                    <button type="submit">Add to Pantry</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>🥘 Your Pantry</h2>
+                <ul class="pantry-list" id="pantryList">
+                    <li class="empty-state">Your pantry is empty. Add some ingredients!</li>
+                </ul>
+            </div>
+
+            <div class="card recipe-section">
+                <h2>✨ Generate Recipe</h2>
+                <button class="generate-btn" id="generateBtn">Generate Recipe from Pantry</button>
+                <div class="recipe-output" id="recipeOutput">
+                    Click the button above to generate a recipe based on your pantry items!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+
+        // Load pantry items on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPantryItems();
+            
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('expiryDate').setAttribute('min', today);
+        });
+
+        // Add item form submission
+        document.getElementById('addItemForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('itemName').value;
+            const expiryDate = document.getElementById('expiryDate').value || null;
+            
+            try {
+                const response = await fetch(`${API_BASE}/pantry/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, expiry_date: expiryDate }),
+                });
+                
+                if (response.ok) {
+                    document.getElementById('addItemForm').reset();
+                    loadPantryItems();
+                } else {
+                    alert('Failed to add item. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error adding item:', error);
+                alert('Error adding item. Please try again.');
+            }
+        });
+
+        // Load pantry items
+        async function loadPantryItems() {
+            try {
+                const response = await fetch(`${API_BASE}/pantry/`);
+                const items = await response.json();
+                
+                const pantryList = document.getElementById('pantryList');
+                
+                if (items.length === 0) {
+                    pantryList.innerHTML = '<li class="empty-state">Your pantry is empty. Add some ingredients!</li>';
+                    updateStats(0, 0);
+                    return;
+                }
+                
+                const today = new Date();
+                let expiringCount = 0;
+                
+                pantryList.innerHTML = items.map(item => {
+                    let statusClass = '';
+                    let expiryText = 'No expiry date';
+                    
+                    if (item.expiry_date) {
+                        const expiryDate = new Date(item.expiry_date);
+                        const daysUntilExpiry = Math.ceil((expiryDate - today) / (1000 * 60 * 60 * 24));
+                        
+                        if (daysUntilExpiry < 0) {
+                            statusClass = 'expired';
+                            expiryText = `Expired ${Math.abs(daysUntilExpiry)} days ago`;
+                        } else if (daysUntilExpiry <= 3) {
+                            statusClass = 'expiring-soon';
+                            expiryText = `Expires in ${daysUntilExpiry} day${daysUntilExpiry !== 1 ? 's' : ''}`;
+                            expiringCount++;
+                        } else {
+                            expiryText = `Expires ${expiryDate.toLocaleDateString()}`;
+                        }
+                    }
+                    
+                    return `
+                        <li class="pantry-item ${statusClass}">
+                            <div class="item-info">
+                                <div class="item-name">${item.name}</div>
+                                <div class="item-expiry">${expiryText}</div>
+                            </div>
+                            <button class="delete-btn" onclick="deleteItem(${item.id})">Delete</button>
+                        </li>
+                    `;
+                }).join('');
+                
+                updateStats(items.length, expiringCount);
+            } catch (error) {
+                console.error('Error loading items:', error);
+            }
+        }
+
+        // Delete item
+        async function deleteItem(itemId) {
+            if (!confirm('Are you sure you want to delete this item?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/pantry/${itemId}`, {
+                    method: 'DELETE',
+                });
+                
+                if (response.ok) {
+                    loadPantryItems();
+                } else {
+                    alert('Failed to delete item. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error deleting item:', error);
+                alert('Error deleting item. Please try again.');
+            }
+        }
+
+        // Generate recipe
+        document.getElementById('generateBtn').addEventListener('click', async () => {
+            const recipeOutput = document.getElementById('recipeOutput');
+            const generateBtn = document.getElementById('generateBtn');
+            
+            recipeOutput.innerHTML = '<div class="loading">🤖 Generating your recipe... This may take a few seconds.</div>';
+            generateBtn.disabled = true;
+            
+            try {
+                const response = await fetch(`${API_BASE}/generate-recipe/`, {
+                    method: 'POST',
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Failed to generate recipe');
+                }
+                
+                const data = await response.json();
+                
+                let output = '';
+                if (data.expiring_items.length > 0) {
+                    output += `⚠️ <strong>Using ${data.expiring_items.length} expiring item(s):</strong> ${data.expiring_items.join(', ')}\n\n`;
+                }
+                output += data.recipe;
+                
+                recipeOutput.innerHTML = output;
+            } catch (error) {
+                console.error('Error generating recipe:', error);
+                recipeOutput.innerHTML = `<div style="color: #dc3545;">❌ ${error.message}</div>`;
+            } finally {
+                generateBtn.disabled = false;
+            }
+        });
+
+        // Update stats
+        function updateStats(total, expiring) {
+            document.getElementById('totalItems').textContent = total;
+            document.getElementById('expiringItems').textContent = expiring;
+        }
+    </script>
+</body>
+</html>

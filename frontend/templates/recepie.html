@@ -1,26 +1,222 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="globals.css" />
-    <link rel="stylesheet" href="styleguide.css" />
-    <link rel="stylesheet" href="recepie.css" />
+    <title>Recipe – PantryChef</title>
+
+    <link rel="stylesheet" href="/static/css/globals.css" />
+    <link rel="stylesheet" href="/static/css/styleguide.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div class="recepie">
-      <a href="recepie.html"
-        ><div class="select-wrapper"><div class="select">name</div></div></a
-      >
-      <div class="frame-3">
-        <a href="food.html"><div class="text-wrapper-7">Home</div></a>
-        <a href="QNA.html"><div class="text-wrapper-7">FAQ</div></a>
-        <a href="index.html"><div class="text-wrapper-7">Log out</div></a>
-      </div>
-      <div class="rectangle-2"></div>
-    </div>
-  </body>
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f6bb73;
+        }
+
+        .navbar {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        .brand {
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.7;
+        }
+
+        .recipe-page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px 24px 40px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .recipe-header {
+            text-align: center;
+            margin-top: 12px;
+            margin-bottom: 24px;
+        }
+
+        #recipeTitle {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+        }
+
+        .recipe-subtitle {
+            margin: 0;
+            font-size: 14px;
+            color: #444444;
+        }
+
+        .recipe-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fbeedc;
+            border-radius: 24px;
+            padding: 24px 28px;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+            overflow: hidden;
+        }
+
+        .recipe-content {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #222222;
+            max-height: calc(100vh - 220px);
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .recipe-content strong {
+            font-weight: 700;
+        }
+
+        .recipe-content br+br {
+            margin-bottom: 4px;
+        }
+
+        .recipe-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .recipe-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .recipe-content::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 999px;
+        }
+
+        @media (max-width: 800px) {
+            .navbar {
+                padding: 16px 16px;
+            }
+
+            .recipe-page {
+                padding: 8px 16px 32px;
+            }
+
+            #recipeTitle {
+                font-size: 26px;
+            }
+
+            .recipe-card {
+                padding: 20px 18px;
+            }
+
+            .recipe-content {
+                max-height: calc(100vh - 200px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="brand">PantryChef</div>
+        <div class="nav-links">
+            <a href="/food">Home</a>
+            <a href="/QNA">FAQ</a>
+            <a href="/">Log out</a>
+        </div>
+    </nav>
+
+    <main class="recipe-page">
+        <header class="recipe-header">
+            <h1 id="recipeTitle">Generating recipe...</h1>
+            <p class="recipe-subtitle">Using the ingredients currently in your fridge.</p>
+        </header>
+
+        <section class="recipe-card">
+            <div id="recipeContent" class="recipe-content">
+                Please wait, your recipe is being created.
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function basicFormat(text) {
+            let t = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+            t = t.replace(/\n/g, "<br>");
+            return t;
+        }
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const titleEl = document.getElementById("recipeTitle");
+            const contentEl = document.getElementById("recipeContent");
+
+            try {
+                const res = await fetch("/api/generate-recipe/", {
+                    method: "POST"
+                });
+
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(err.detail || "Failed to generate recipe");
+                }
+
+                const data = await res.json();
+                const raw = data.recipe || "";
+
+                const lines = raw
+                    .split("\n")
+                    .map((l) => l.trim())
+                    .filter((l) => l.length > 0);
+
+                let bodyText = raw;
+
+                if (lines.length > 0) {
+                    const temp = document.createElement("div");
+                    temp.innerHTML = lines[0];
+                    const cleanTitle = (temp.textContent || temp.innerText || lines[0]).trim();
+
+                    titleEl.textContent = cleanTitle || "Your recipe";
+                    bodyText = lines.slice(1).join("\n");
+                } else {
+                    titleEl.textContent = "Your recipe";
+                }
+
+
+                const html = basicFormat(bodyText);
+                contentEl.innerHTML = html || "No recipe text returned.";
+            } catch (e) {
+                titleEl.textContent = "Error";
+                contentEl.textContent = "Failed to generate recipe: " + e.message;
+            }
+        });
+    </script>
+</body>
+
 </html>

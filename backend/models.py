@@ -18,7 +18,7 @@ class PantryItem(Base):
     def days_until_expiry(self) -> int:
         """Calculate days until expiry"""
         if not self.expiry_date:
-            return 999  # No expiry date set
+            return 999
         delta = self.expiry_date - date.today()
         return delta.days
     

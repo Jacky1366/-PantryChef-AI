@@ -4,70 +4,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <title>PantryChef - Login</title>
-    <link rel="stylesheet" href="globals.css" />
-    <link rel="stylesheet" href="styleguide.css" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/globals.css" />
+    <link rel="stylesheet" href="/static/css/styleguide.css" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <main class="login">
-      <section class="component" aria-label="Brand section">
-        <div class="rectangle"></div>
-        <div class="union"></div>
-        <h1 class="text-wrapper">PantryChef</h1>
-        <img class="image" src="https://c.animaapp.com/mi1yoapbvFsmXd/img/image.png" alt="Refrigerator illustration" />
-      </section>
-      <section class="log-in" aria-label="Login form">
-        <h2 class="text-wrapper-5">Welcome back!</h2>
-        <form action="add-food.html" method="get">
-          <div class="email-botton">
+      <div class="login-card">
+        <section class="login-left" aria-label="Brand section">
+          <div class="brand-row">
+            <h1 class="brand-name">PantryChef</h1>
+          </div>
+          <div class="illustration-wrap">
+            <img
+              class="fridge-image"
+              src="https://c.animaapp.com/mi1yoapbvFsmXd/img/image.png"
+              alt="Refrigerator illustration"
+            />
+          </div>
+        </section>
+
+        <section class="login-right" aria-label="Login form">
+          <h2 class="welcome-title">Welcome back!</h2>
+
+          <form action="/add-food" method="get" class="login-form">
             <label for="username-email" class="visually-hidden">Username or Email</label>
             <input
               type="text"
               id="username-email"
               name="username-email"
-              class="div"
+              class="input-field"
               placeholder="Username/Email"
               required
               aria-required="true"
             />
-          </div>
-          <div class="password-botton">
+
             <label for="password" class="visually-hidden">Password</label>
             <input
               type="password"
               id="password"
               name="password"
-              class="text-wrapper-2"
+              class="input-field"
               placeholder="Password"
               required
               aria-required="true"
             />
+
+            <div class="forgot-row">
+              <a href="#" class="forgot-link">forgot password?</a>
+            </div>
+
+            <button type="submit" class="login-button">
+              <span>Login</span>
+            </button>
+          </form>
+
+          <p class="divider-text">
+            Don't have an account? <span>Continue with</span>
+          </p>
+
+          <div class="social-row" role="group" aria-label="Social login options">
+            <a href="#" aria-label="Continue with Google">
+              <img
+                src="https://c.animaapp.com/mi1yoapbvFsmXd/img/ant-design-google-circle-filled.svg"
+                alt="Google"
+              />
+            </a>
+            <a href="#" aria-label="Continue with Apple">
+              <img
+                src="https://c.animaapp.com/mi1yoapbvFsmXd/img/ic-round-apple.svg"
+                alt="Apple"
+              />
+            </a>
+            <a href="#" aria-label="Continue with Facebook">
+              <img
+                src="https://c.animaapp.com/mi1yoapbvFsmXd/img/ic-baseline-facebook.svg"
+                alt="Facebook"
+              />
+            </a>
           </div>
-          <a href="#" class="text-wrapper-4">forgot password?</a>
-          <button type="submit" class="login-botton">
-            <span class="text-wrapper-3">Login</span>
-          </button>
-        </form>
-        <p class="dont-t-have-an">Dont't have an account?&nbsp;&nbsp;Continue with</p>
-        <div class="frame" role="group" aria-label="Social login options">
-          <a href="#" aria-label="Continue with Google">
-            <img
-              class="img"
-              src="https://c.animaapp.com/mi1yoapbvFsmXd/img/ant-design-google-circle-filled.svg"
-              alt="Google"
-            />
-          </a>
-          <a href="#" aria-label="Continue with Apple">
-            <img class="img" src="https://c.animaapp.com/mi1yoapbvFsmXd/img/ic-round-apple.svg" alt="Apple" />
-          </a>
-          <a href="#" aria-label="Continue with Facebook">
-            <img class="img" src="https://c.animaapp.com/mi1yoapbvFsmXd/img/ic-baseline-facebook.svg" alt="Facebook" />
-          </a>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
   </body>
 </html>

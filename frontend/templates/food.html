@@ -1,38 +1,119 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="globals.css" />
-    <link rel="stylesheet" href="styleguide.css" />
-    <link rel="stylesheet" href="food.css" />
+    <title>Pantry – PantryChef</title>
+
+    <link rel="stylesheet" href="/static/css/globals.css" />
+    <link rel="stylesheet" href="/static/css/styleguide.css" />
+    <link rel="stylesheet" href="/static/css/food.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
+
   <body>
-    <div class="food">
-      <div class="text-wrapper-8">PantryChef</div>
-      <div class="frame-4">
-        <a href="QNA.html"><div class="text-wrapper-9">FAQ</div></a>
-        <a href="index.html"><div class="text-wrapper-9">Log out</div></a>
+    <nav class="navbar">
+      <div class="brand">PantryChef</div>
+      <div class="nav-links">
+        <a href="/QNA">FAQ</a>
+        <a href="/">Log out</a>
       </div>
-      <div class="frame-5">
-        <div class="rectangle-3"></div>
-        <div class="rectangle-3"></div>
-        <div class="rectangle-3"></div>
+    </nav>
+
+    <main class="food-page">
+      <header class="page-header">
+        <h1>What’s in your fridge?</h1>
+        <p>Tap to select the ingredients you want to cook with.</p>
+      </header>
+
+      <section id="ingredientGrid" class="ingredient-grid">
+      </section>
+
+      <div class="actions">
+        <div class="actions-left">
+          <button class="primary-btn" type="button" onclick="handleSelect()">
+            Generate recipe
+          </button>
+          <button class="secondary-btn" type="button" onclick="handleClear()">
+            Clear fridge
+          </button>
+        </div>
+
+        <a href="/add-food" class="back-link" aria-label="Back to add food">
+          <img
+            src="https://c.animaapp.com/mi1yoapbvFsmXd/img/ri-arrow-go-back-fill.svg"
+            alt="Go back"
+          />
+        </a>
       </div>
-      <div class="frame-5">
-        <div class="rectangle-3"></div>
-        <div class="rectangle-3"></div>
-        <div class="rectangle-3"></div>
-      </div>
-      <a href="recepie.html"
-        ><div class="div-wrapper"><div class="text-wrapper-10">Select</div></div></a
-      >
-      <a href="add-food.html"
-        ><img class="ri-arrow-go-back" src="https://c.animaapp.com/mi1yoapbvFsmXd/img/ri-arrow-go-back-fill.svg"
-      /></a>
-    </div>
+    </main>
+
+    <script>
+      async function loadIngredients() {
+        try {
+          const res = await fetch("/api/pantry/");
+          const items = await res.json();
+
+          const grid = document.getElementById("ingredientGrid");
+          grid.innerHTML = "";
+
+          if (!items || items.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "empty-state";
+            empty.textContent = "Your fridge is empty. Add something first!";
+            grid.appendChild(empty);
+            return;
+          }
+
+          items.forEach((item) => {
+            const card = document.createElement("button");
+            card.className = "ingredient-card";
+            card.textContent = item.name;
+            card.dataset.itemId = item.id;
+
+            card.addEventListener("click", () => {
+              card.classList.toggle("selected");
+            });
+
+            grid.appendChild(card);
+          });
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      function handleSelect() {
+        const selectedCards = document.querySelectorAll(".ingredient-card.selected");
+
+        if (selectedCards.length === 0) {
+          alert("Please select at least one ingredient.");
+          return;
+        }
+
+        const selectedIds = Array.from(selectedCards)
+          .map((card) => card.dataset.itemId)
+          .filter(Boolean);
+
+        localStorage.setItem("selectedIngredientIds", JSON.stringify(selectedIds));
+        window.location.href = "/recipe";
+      }
+
+      async function handleClear() {
+        const ok = confirm("Clear all ingredients in your fridge?");
+        if (!ok) return;
+
+        try {
+          await fetch("/api/pantry/", { method: "DELETE" });
+          await loadIngredients();
+        } catch (e) {
+          alert("Failed to clear fridge");
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", loadIngredients);
+    </script>
   </body>
 </html>

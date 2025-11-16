@@ -19,7 +19,7 @@ class PantryItemResponse(PantryItemBase):
     id: int
     
     class Config:
-        from_attributes = True  # Updated from orm_mode for Pydantic v2
+        from_attributes = True
 
 
 class RecipeResponse(BaseModel):

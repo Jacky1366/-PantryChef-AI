@@ -5,8 +5,9 @@ from sqlalchemy.orm import Session
 from typing import List
 import openai
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 from dotenv import load_dotenv
+import urllib.parse
 
 from database import engine, get_db
 from models import Base, PantryItem
@@ -33,12 +34,11 @@ templates = Jinja2Templates(directory="templates")
 
 # Serve the main page
 @app.get("/")
-async def read_root(request: Request, db: Session = Depends(get_db)):
+async def read_root(request: Request):
     """Serve the main HTML page"""
-    items = db.query(PantryItem).all()
     return templates.TemplateResponse(
         "index.html",
-        {"request": request, "items": items}
+        {"request": request}
     )
 
 
@@ -120,7 +120,8 @@ Requirements:
 - Recipe should be practical and take 30 minutes or less
 - Include portions for 2 people
 - Provide clear step-by-step instructions
-- Include a recipe name as the first line"""
+- Include a catchy recipe name as the FIRST LINE starting with "# "
+- Format the recipe nicely with sections for ingredients and instructions"""
     else:
         prompt = f"""You are a creative chef. Generate ONE delicious recipe.
 
@@ -131,7 +132,8 @@ Requirements:
 - Recipe should be practical and take 30 minutes or less
 - Include portions for 2 people
 - Provide clear step-by-step instructions
-- Include a recipe name as the first line"""
+- Include a catchy recipe name as the FIRST LINE starting with "# "
+- Format the recipe nicely with sections for ingredients and instructions"""
     
     # Call OpenAI API
     try:
@@ -140,7 +142,7 @@ Requirements:
             messages=[
                 {
                     "role": "system",
-                    "content": "You are a helpful chef who creates practical, delicious recipes."
+                    "content": "You are a helpful chef who creates practical, delicious recipes. Always start with the recipe name."
                 },
                 {
                     "role": "user",
@@ -148,7 +150,7 @@ Requirements:
                 }
             ],
             temperature=0.8,
-            max_tokens=500
+            max_tokens=600
         )
         
         recipe_text = response.choices[0].message.content
@@ -159,11 +161,20 @@ Requirements:
             detail=f"Failed to generate recipe: {str(e)}"
         )
     
+    # Extract recipe title for YouTube search
+    recipe_lines = recipe_text.split('\n')
+    recipe_title = recipe_lines[0].replace('#', '').strip()
+    
+    # Generate YouTube search URL
+    search_query = urllib.parse.quote(f"{recipe_title} recipe")
+    youtube_search_url = f"https://www.youtube.com/results?search_query={search_query}"
+    
     return RecipeResponse(
         recipe=recipe_text,
         expiring_items=expiring_soon,
         total_items=len(all_ingredients),
-        items_used=len(expiring_soon) if expiring_soon else len(all_ingredients)
+        items_used=len(expiring_soon) if expiring_soon else len(all_ingredients),
+        video_url=youtube_search_url
     )
 
 
@@ -175,4 +186,4 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)

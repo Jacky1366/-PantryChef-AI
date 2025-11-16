@@ -28,3 +28,4 @@ class RecipeResponse(BaseModel):
     expiring_items: List[str] = Field(default=[], description="List of expiring ingredients used")
     total_items: int = Field(..., description="Total number of pantry items")
     items_used: int = Field(..., description="Number of items used in the recipe")
+    video_url: Optional[str] = Field(None, description="YouTube search URL for the recipe")

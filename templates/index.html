@@ -109,6 +109,12 @@
             transform: translateY(0);
         }
 
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .pantry-list {
             list-style: none;
             max-height: 400px;
@@ -216,10 +222,11 @@
 
         .stat-card {
             flex: 1;
-            background: #f8f9fa;
+            background: white;
             padding: 15px;
             border-radius: 8px;
             text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .stat-number {
@@ -232,6 +239,50 @@
             color: #666;
             font-size: 0.9em;
             margin-top: 5px;
+        }
+
+        .video-link-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .video-link-box h3 {
+            color: white;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .video-link-box a {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 1.05em;
+        }
+
+        .video-link-box a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .expiring-badge {
+            background: #ff9800;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            display: inline-block;
         }
 
         @media (max-width: 768px) {
@@ -253,7 +304,7 @@
     <div class="container">
         <header>
             <h1>🍳 PantryChef AI</h1>
-            <p>Turn your ingredients into delicious recipes</p>
+            <p>Turn your ingredients into delicious recipes • Powered by AI</p>
         </header>
 
         <div class="stats">
@@ -292,7 +343,7 @@
 
             <div class="card recipe-section">
                 <h2>✨ Generate Recipe</h2>
-                <button class="generate-btn" id="generateBtn">Generate Recipe from Pantry</button>
+                <button class="generate-btn" id="generateBtn">🎲 Generate Recipe from Pantry</button>
                 <div class="recipe-output" id="recipeOutput">
                     Click the button above to generate a recipe based on your pantry items!
                 </div>
@@ -436,13 +487,30 @@
                 
                 const data = await response.json();
                 
-                let output = '';
-                if (data.expiring_items.length > 0) {
-                    output += `⚠️ <strong>Using ${data.expiring_items.length} expiring item(s):</strong> ${data.expiring_items.join(', ')}\n\n`;
-                }
-                output += data.recipe;
+                let output = '<div>';
                 
+                // Show expiring items badge if any
+                if (data.expiring_items && data.expiring_items.length > 0) {
+                    output += `<div class="expiring-badge">⚠️ Using ${data.expiring_items.length} expiring item(s): ${data.expiring_items.join(', ')}</div>`;
+                }
+                
+                // Display recipe
+                output += `<div style="white-space: pre-wrap; line-height: 1.8;">${data.recipe}</div>`;
+                
+                // Add video link if available
+                if (data.video_url) {
+                    output += `
+                    <div class="video-link-box">
+                        <h3>📺 Watch How to Make This</h3>
+                        <a href="${data.video_url}" target="_blank" rel="noopener noreferrer">
+                            🎬 Find Recipe Videos on YouTube →
+                        </a>
+                    </div>`;
+                }
+                
+                output += '</div>';
                 recipeOutput.innerHTML = output;
+                
             } catch (error) {
                 console.error('Error generating recipe:', error);
                 recipeOutput.innerHTML = `<div style="color: #dc3545;">❌ ${error.message}</div>`;

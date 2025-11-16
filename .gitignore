@@ -4,67 +4,40 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# Virtual Environment
 venv/
 env/
 ENV/
-env.bak/
-venv.bak/
+.venv
 
-# Environment Variables - CRITICAL!
-.env
-.env.local
-.env.*.local
-
-# Database Files
+# Database
 *.db
 *.sqlite
 *.sqlite3
 pantry.db
-test_pantry.db
 
-# IDE
+# Environment variables
+.env
+
+# IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
 
 # Testing
 .pytest_cache/
 .coverage
 htmlcov/
-.tox/
-
-# Logs
-*.log
-
-# FastAPI/Uvicorn
-.uvicorn_cache/
-
-# MacOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Temporary files
-*.tmp
-*.bak.env

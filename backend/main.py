@@ -8,9 +8,9 @@ import os
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
-from database import engine, get_db
-from models import Base, PantryItem
-from schemas import PantryItemCreate, PantryItemResponse, RecipeResponse
+from backend.database import engine, get_db
+from backend.models import Base, PantryItem
+from backend.schemas import PantryItemCreate, PantryItemResponse, RecipeResponse
 
 # Load environment variables
 load_dotenv()

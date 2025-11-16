@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>PantryChef - Login</title>
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="styleguide.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <main class="login">
+      <section class="component" aria-label="Brand section">
+        <div class="rectangle"></div>
+        <div class="union"></div>
+        <h1 class="text-wrapper">PantryChef</h1>
+        <img class="image" src="https://c.animaapp.com/mi1yoapbvFsmXd/img/image.png" alt="Refrigerator illustration" />
+      </section>
+      <section class="log-in" aria-label="Login form">
+        <h2 class="text-wrapper-5">Welcome back!</h2>
+        <form action="add-food.html" method="get">
+          <div class="email-botton">
+            <label for="username-email" class="visually-hidden">Username or Email</label>
+            <input
+              type="text"
+              id="username-email"
+              name="username-email"
+              class="div"
+              placeholder="Username/Email"
+              required
+              aria-required="true"
+            />
+          </div>
+          <div class="password-botton">
+            <label for="password" class="visually-hidden">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="text-wrapper-2"
+              placeholder="Password"
+              required
+              aria-required="true"
+            />
+          </div>
+          <a href="#" class="text-wrapper-4">forgot password?</a>
+          <button type="submit" class="login-botton">
+            <span class="text-wrapper-3">Login</span>
+          </button>
+        </form>
+        <p class="dont-t-have-an">Dont't have an account?&nbsp;&nbsp;Continue with</p>
+        <div class="frame" role="group" aria-label="Social login options">
+          <a href="#" aria-label="Continue with Google">
+            <img
+              class="img"
+              src="https://c.animaapp.com/mi1yoapbvFsmXd/img/ant-design-google-circle-filled.svg"
+              alt="Google"
+            />
+          </a>
+          <a href="#" aria-label="Continue with Apple">
+            <img class="img" src="https://c.animaapp.com/mi1yoapbvFsmXd/img/ic-round-apple.svg" alt="Apple" />
+          </a>
+          <a href="#" aria-label="Continue with Facebook">
+            <img class="img" src="https://c.animaapp.com/mi1yoapbvFsmXd/img/ic-baseline-facebook.svg" alt="Facebook" />
+          </a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

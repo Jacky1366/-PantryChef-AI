@@ -1,0 +1,30 @@
+.QNA {
+  background-color: #f6bb73;
+  width: 100%;
+  min-width: 1280px;
+  min-height: 832px;
+  display: flex;
+}
+
+.QNA .frame-2 {
+  display: flex;
+  margin-top: 19px;
+  width: 296px;
+  height: 45px;
+  margin-left: 945px;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.QNA .text-wrapper-6 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 500;
+  color: #000000;
+  font-size: 30px;
+  letter-spacing: 0;
+  line-height: normal;
+}

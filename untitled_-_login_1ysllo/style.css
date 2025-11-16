@@ -1,0 +1,322 @@
+.login {
+  display: flex;
+  height: 832px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 105px 140px;
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(247, 188, 116, 1) 0%,
+    rgba(247, 194, 129, 1) 100%,
+    rgba(245, 245, 245, 1) 100%
+  );
+  width: 100%;
+  min-width: 1280px;
+}
+
+.login .component {
+  position: relative;
+  width: 1000.1px;
+  height: 621.68px;
+  margin-left: -0.05px;
+  margin-right: -0.05px;
+}
+
+.login .rectangle {
+  position: absolute;
+  width: 99.99%;
+  height: 99.89%;
+  top: 0;
+  left: 0;
+  background-color: #fff1e0;
+}
+
+.login .union {
+  position: absolute;
+  width: 53.84%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-image: url(https://c.animaapp.com/mi1yoapbvFsmXd/img/union.svg);
+  background-size: 100% 100%;
+}
+
+.login .text-wrapper {
+  position: absolute;
+  width: 20.30%;
+  height: 7.24%;
+  top: 2.25%;
+  left: 2.51%;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 700;
+  color: #000000;
+  font-size: 30px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.login .image {
+  position: absolute;
+  top: 83px;
+  left: 57px;
+  width: 323px;
+  height: 485px;
+  object-fit: cover;
+}
+
+.login .log-in {
+  position: absolute;
+  top: 296px;
+  left: 736px;
+  width: 296px;
+  height: 301px;
+}
+
+.login .email-botton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 296px;
+  height: 54px;
+  display: flex;
+  background-color: #f5f5f5;
+  border-radius: 9px;
+  border: 1px solid;
+  border-color: #000000;
+}
+
+.login .div {
+  margin-top: 19px;
+  width: 123px;
+  height: 16px;
+  margin-left: 15px;
+  font-family: var(--single-line-body-base-font-family);
+  font-weight: var(--single-line-body-base-font-weight);
+  color: #000000;
+  font-size: var(--single-line-body-base-font-size);
+  letter-spacing: var(--single-line-body-base-letter-spacing);
+  line-height: var(--single-line-body-base-line-height);
+  white-space: nowrap;
+  font-style: var(--single-line-body-base-font-style);
+}
+
+.login .password-botton {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  width: 296px;
+  height: 54px;
+  gap: 10px;
+  padding: 19px 15px;
+  position: absolute;
+  top: 88px;
+  left: 0;
+  background-color: #f5f5f5;
+  border-radius: 9px;
+  border: 1px solid;
+  border-color: #000000;
+}
+
+.login .text-wrapper-2 {
+  position: relative;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  width: 74px;
+  height: 16px;
+  font-family: var(--single-line-body-base-font-family);
+  font-weight: var(--single-line-body-base-font-weight);
+  color: #000000;
+  font-size: var(--single-line-body-base-font-size);
+  letter-spacing: var(--single-line-body-base-letter-spacing);
+  line-height: var(--single-line-body-base-line-height);
+  white-space: nowrap;
+  font-style: var(--single-line-body-base-font-style);
+}
+
+.login .login-botton {
+  display: flex;
+  width: 296px;
+  height: 53px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 129px;
+  position: absolute;
+  top: 234px;
+  left: 0;
+  background-color: #1e1e1e;
+  border-radius: 9px;
+}
+
+.login .text-wrapper-3 {
+  position: relative;
+  width: fit-content;
+  margin-left: -2.00px;
+  margin-right: -2.00px;
+  font-family: var(--single-line-body-base-font-family);
+  font-weight: var(--single-line-body-base-font-weight);
+  color: #ffffff;
+  font-size: var(--single-line-body-base-font-size);
+  letter-spacing: var(--single-line-body-base-letter-spacing);
+  line-height: var(--single-line-body-base-line-height);
+  white-space: nowrap;
+  font-style: var(--single-line-body-base-font-style);
+}
+
+.login .frame {
+  display: inline-flex;
+  align-items: center;
+  gap: 27px;
+  position: absolute;
+  top: 336px;
+  left: 53px;
+}
+
+.login .img {
+  position: relative;
+  width: 45px;
+  height: 45px;
+}
+
+.login .text-wrapper-4 {
+  position: absolute;
+  top: 156px;
+  left: 163px;
+  width: 133px;
+  font-family: var(--single-line-body-base-font-family);
+  font-weight: var(--single-line-body-base-font-weight);
+  color: #000000;
+  font-size: var(--single-line-body-base-font-size);
+  letter-spacing: var(--single-line-body-base-letter-spacing);
+  line-height: var(--single-line-body-base-line-height);
+  white-space: nowrap;
+  font-style: var(--single-line-body-base-font-style);
+}
+
+.login .text-wrapper-5 {
+  position: absolute;
+  top: -95px;
+  left: -8px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 700;
+  color: #000000;
+  font-size: 35px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.login .dont-t-have-an {
+  position: absolute;
+  top: 301px;
+  left: 0;
+  font-family: var(--single-line-body-base-font-family);
+  font-weight: var(--single-line-body-base-font-weight);
+  color: #000000;
+  font-size: var(--single-line-body-base-font-size);
+  letter-spacing: var(--single-line-body-base-letter-spacing);
+  line-height: var(--single-line-body-base-line-height);
+  white-space: nowrap;
+  font-style: var(--single-line-body-base-font-style);
+}
+/* Inject original CSS code here */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.login .email-botton input.div {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--single-line-body-base-font-family);
+  font-weight: var(--single-line-body-base-font-weight);
+  color: #000000;
+  font-size: var(--single-line-body-base-font-size);
+  letter-spacing: var(--single-line-body-base-letter-spacing);
+  line-height: var(--single-line-body-base-line-height);
+  font-style: var(--single-line-body-base-font-style);
+  padding: 0;
+  margin: 0;
+}
+
+.login .email-botton input.div::placeholder {
+  color: #000000;
+  opacity: 1;
+}
+
+.login .password-botton input.text-wrapper-2 {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--single-line-body-base-font-family);
+  font-weight: var(--single-line-body-base-font-weight);
+  color: #000000;
+  font-size: var(--single-line-body-base-font-size);
+  letter-spacing: var(--single-line-body-base-letter-spacing);
+  line-height: var(--single-line-body-base-line-height);
+  font-style: var(--single-line-body-base-font-style);
+  padding: 0;
+  margin: 0;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+}
+
+.login .password-botton input.text-wrapper-2::placeholder {
+  color: #000000;
+  opacity: 1;
+}
+
+.login .login-botton {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.login .login-botton:hover {
+  background-color: #333333;
+}
+
+.login .login-botton:active {
+  background-color: #000000;
+}
+
+.login .frame a {
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}
+
+.login .frame a:hover {
+  opacity: 0.8;
+}
+
+.login .frame a:active {
+  opacity: 0.6;
+}
+
+.login .text-wrapper-4 {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.login .text-wrapper-4:hover {
+  color: #333333;
+}
+
+.login form {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}

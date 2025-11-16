@@ -10,7 +10,6 @@ body {
   background-color: #f6bb73;
 }
 
-/* NAV */
 
 .navbar {
   max-width: 1100px;
@@ -41,7 +40,6 @@ body {
   opacity: 0.7;
 }
 
-/* PAGE */
 
 .recipe-page {
   max-width: 1100px;
@@ -67,8 +65,6 @@ body {
   font-size: 14px;
   color: #444444;
 }
-
-/* CARD */
 
 .recipe-card {
   max-width: 900px;
@@ -97,8 +93,6 @@ body {
   margin-bottom: 4px;
 }
 
-/* 滚动条稍微好看一点 */
-
 .recipe-content::-webkit-scrollbar {
   width: 8px;
 }
@@ -112,7 +106,6 @@ body {
   border-radius: 999px;
 }
 
-/* 响应式 */
 
 @media (max-width: 800px) {
   .navbar {

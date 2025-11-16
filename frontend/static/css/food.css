@@ -10,7 +10,6 @@ body {
   background-color: #f6bb73;
 }
 
-/* NAV */
 
 .navbar {
   max-width: 1100px;
@@ -41,7 +40,6 @@ body {
   opacity: 0.7;
 }
 
-/* PAGE */
 
 .food-page {
   max-width: 1100px;
@@ -68,7 +66,6 @@ body {
   color: #444444;
 }
 
-/* GRID */
 
 .ingredient-grid {
   display: grid;
@@ -118,7 +115,6 @@ body {
   font-weight: 500;
 }
 
-/* ACTIONS */
 
 .actions {
   margin-top: 8px;
@@ -189,7 +185,6 @@ body {
   height: 40px;
 }
 
-/* 响应式 */
 
 @media (max-width: 800px) {
   .navbar {

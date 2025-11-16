@@ -10,7 +10,6 @@ body {
     background: #F2B971;
 }
 
-/* NAV */
 .navbar {
     max-width: 1100px;
     margin: 0 auto;
@@ -40,7 +39,6 @@ body {
     opacity: 0.7;
 }
 
-/* MAIN CONTENT */
 .container {
     flex: 1;
     width: 100%;
@@ -66,7 +64,6 @@ body {
     margin: 0;
 }
 
-/* SEARCH CARD */
 .search-card {
     margin: 32px auto 24px;
     background: #FFF4E6;
@@ -129,7 +126,6 @@ body {
     height: auto;
 }
 
-/* 响应式 */
 @media (max-width: 768px) {
     .navbar {
         padding: 16px 16px;

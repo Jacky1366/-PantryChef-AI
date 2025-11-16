@@ -13,14 +13,8 @@ from backend.database import engine, get_db
 from backend.models import Base, PantryItem
 from backend.schemas import PantryItemCreate, PantryItemResponse, RecipeResponse
 
-# -----------------------------
-# ✅ 新 OpenAI SDK 导入方式
-# -----------------------------
 from openai import OpenAI
 
-# -----------------------------
-# ✅ 强制加载项目根目录的 .env（100% 成功）
-# -----------------------------
 env_path = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(dotenv_path=env_path)
 
@@ -29,12 +23,8 @@ api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
     raise Exception(f"❌ OPENAI_API_KEY not found. Make sure .env exists at: {env_path}")
 
-# 初始化 OpenAI 客户端
 client = OpenAI(api_key=api_key)
 
-# -----------------------------
-# Startup
-# -----------------------------
 Base.metadata.create_all(bind=engine)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,9 +41,6 @@ app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 
 
-# -----------------------------
-# Routes
-# -----------------------------
 @app.get("/")
 async def read_root(request: Request, db: Session = Depends(get_db)):
     items = db.query(PantryItem).all()
@@ -189,9 +176,6 @@ async def recipe_page(request: Request):
     return templates.TemplateResponse("recepie.html", {"request": request})
 
 
-# -----------------------------
-# Run server
-# -----------------------------
 if __name__ == "__main__":
     import uvicorn
 
